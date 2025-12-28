@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Swarup Majumder — Portfolio</title>
+  <meta name="description" content="Personal website and portfolio of Swarup Majumder — projects, resume, and contact." />
+  <meta name="color-scheme" content="light dark">
+  <!-- Open Graph / Twitter (optional placeholders) -->
+  <meta property="og:title" content="Swarup Majumder — Portfolio" />
+  <meta property="og:description" content="Projects, resume, and contact information." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://localhost:5500/" />
+  <meta property="og:image" content="poster_img.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.ico">
+  <style>
+    :root{
+      --bg: #0b0c0f;
+      --card: #11131a;
+      --fg: #eaeef5;
+      --muted: #9aa4b2;
+      --brand: #ff5c7f;
+      --brand-2: #ee223d;
+      --ring: rgba(239, 255, 92, 0.35);
+      --shadow: rgba(2,6,23,0.6);
+      --border: #1e2230;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --fg: #0b1220;
+        --muted: #52607a;
+        --brand: #be4866;
+        --brand-2: #5c4b968383;
+        --ring: rgba(109,40,217,0.25);
+        --shadow: rgba(2,6,23,0.06);
+        --border: #e5e7eb;
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--fg);
+      background: var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    a:hover{color:var(--brand-2)}
+    .container{max-width:1280px; padding:0 1rem; margin:0 auto}
+    .nav{position:sticky; top:0; z-index:30; backdrop-filter:saturate(140%) blur(8px); background:color-mix(in oklab, var(--bg), transparent 60%); border-bottom:1px solid var(--border)}
+    .nav-inner{display:flex; gap:1rem; align-items:center; justify-content:space-between; padding:.9rem 0}
+    .logo{display:flex; align-items:center; gap:.6rem; font-weight:700}
+    .logo .dot{width:.65rem; height:.65rem; border-radius:999px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); box-shadow:0 0 0 3px var(--ring)}
+    .nav ul{list-style:none; display:flex; gap:1rem; padding:0; margin:0}
+    .nav a{padding:.5rem .75rem; border-radius:.6rem; border:1px solid transparent}
+    .nav a:focus-visible, .btn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+    .nav a:hover{border-color:var(--border); background:color-mix(in hsl, var(--card), transparent 60%)}
+
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:.9rem; border:1px solid var(--border); background:linear-gradient(180deg, color-mix(in oklab,var(--card),#000 10%), color-mix(in oklab,var(--card),#000 18%));
+      box-shadow:0 8px 24px var(--shadow); color:var(--fg); transition:transform .15s ease, border-color .15s ease}
+    .btn:hover{transform:translateY(-1px); border-color:color-mix(in oklab, var(--brand), transparent 65%)}
+    .btn.secondary{background:transparent}
+
+    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:2rem; align-items:center; padding:5rem 0 3rem}
+    @media (max-width:900px){.hero{grid-template-columns:1fr; padding:3rem 0 2rem}}
+    .pill{display:inline-flex; align-items:center; gap:.5rem; padding:.3rem .6rem; border-radius:999px; font-size:.85rem; color:var(--muted); border:1px solid var(--border)}
+    .title{font-weight:800; letter-spacing:-.02em; line-height:1.1; font-size:clamp(2rem, 1rem + 4vw, 3.25rem); margin:.6rem 0 1rem}
+    .subtitle{color:var(--muted); max-width:100%}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:color-mix(in oklab,var(--card), #000 8%); border:1px solid var(--border); padding:.12rem .4rem; border-radius:.4rem}
+
+    .card{border:1px solid var(--border); background:linear-gradient(180deg, color-mix(in oklab,var(--card),#000 6%), color-mix(in oklab,var(--card),#000 14%)); border-radius:1.1rem; box-shadow:0 12px 28px var(--shadow)}
+    .card.pad{padding:1.25rem}
+
+    .cta{display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.2rem}
+    .avatar{aspect-ratio:1/1; width:min(260px, 60vw); border-radius:1.1rem; overflow:hidden; border:1px solid var(--border)}
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block; filter:saturate(108%)}
+
+    section{padding:2.2rem 0}
+    section h2{font-size:1.5rem; margin:0 0 .8rem; letter-spacing:-.01em}
+    .grid{display:grid; grid-template-columns:repeat(12, 1fr); gap:1rem}
+    .col-4{grid-column:span 4}
+    .col-6{grid-column:span 6}
+    .col-8{grid-column:span 8}
+    .col-12{grid-column:span 12}
+    @media (max-width:900px){.col-4,.col-6,.col-8{grid-column:span 12}}
+
+    .project{display:flex; flex-direction:column; gap:.8rem}
+    .project .thumb{aspect-ratio:16/9; width:100%; border-radius:.8rem; overflow:hidden; border:1px solid var(--border); background:color-mix(in oklab,var(--card), #000 10%)}
+    .project .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+    .tags{display:flex; flex-wrap:wrap; gap:.4rem}
+    .tag{font-size:.8rem; padding:.25rem .5rem; border:1px solid var(--border); color:var(--muted); border-radius:.5rem}
+
+    .filterbar{display:flex; gap:.6rem; flex-wrap:wrap; margin:.6rem 0 1rem}
+    .filterbar button{cursor:pointer}
+
+    .list{display:flex; flex-direction:column; gap:.8rem}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.8rem 1rem; border-radius:.8rem; border:1px solid var(--border)}
+    .row small{color:var(--muted)}
+
+    footer{padding:3rem 0; color:var(--muted)}
+    .dot-sep{opacity:.35; margin:0 .5ch}
+
+    .resume{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+    @media (max-width:900px){.resume{grid-template-columns:1fr}}
+
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+
+    #research {
+      background: color-mix(in oklab, var(--card), transparent 90%);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2.5rem 1rem;
+    }
+    .thumb.poster {
+      aspect-ratio: auto;
+    }
+
+    .thumb.poster img {
+      object-fit: contain;
+      background: #0b0c0f;
+    }
+    /* ===== Project carousel ===== */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel-track > * {
+      min-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel video {
+      background: black;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.55);
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      padding: 0.2rem 0.6rem;
+      cursor: pointer;
+      border-radius: 0.4rem;
+      opacity: 0;
+      z-index: 5;
+    }
+
+    .carousel:hover .carousel-btn {
+      opacity: 1;
+    }
+
+    .carousel-btn.prev { left: 0.5rem; }
+    .carousel-btn.next { right: 0.5rem; }
+    #contact form {
+      padding: 1rem;
+    }
+    #contact input,
+    #contact textarea {
+      width: 100%;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="logo" aria-label="Home"><span class="dot" aria-hidden="true"></span> <span>Swarup Majumder</span></a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#resume">Resume</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div>
+        <h1 class="title">Hi, I’m <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent">Swarup Majumder</span>!<br/></h1>
+        <p class="subtitle">I'm a Computer Engineering junior at the University of Illinois at Urbana-Champaign (UIUC). I serve as an Undergraduate Research Assistant at the 
+        <a href="https://parasollab.web.illinois.edu/"
+        target="_blank"
+        rel="noopener"
+        style="font-weight:600">
+        Parasol Lab
+        </a> under <a href="https://siebelschool.illinois.edu/about/people/faculty/rwerger"
+        target="_blank"
+        rel="noopener"
+        style="font-weight:600">
+        Professor Lawrence Rauchwerger,
+        </a> working on the STAPL project. I'm also a course staff member for ECE 220, a systems programming course for ECE students at UIUC.  My interests are in Computer Architecture, High Performance Computing, and Embedded Systems. </p>
+        <div class="cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn secondary" href="mailto:swarupm2@illinois.edu">Email Me</a>
+          <a class="btn secondary" href="https://www.linkedin.com/in/swarup-majumder-296931298/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <p style="margin-top:.8rem; color:var(--muted)">Press <span class="kbd">/</span> to search.</p>
+      </div>
+      <div class="card avatar">
+        <img src="files/pfp.jpg" alt="Portrait or workspace" loading="lazy" />
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research">
+      <h2>Research</h2>
+      <div class="grid">
+        <article class="col-12 card pad project" data-tags="cuda hpc research">
+          <a class="thumb thumb-overlay poster" href="STAPL_POSTER_COPY.pdf" target="_blank" rel="noopener">
+          <img src="files/poster_img.png" alt="Research poster thumbnail" loading="lazy" />
+          <div class="thumb-title">
+            GPU Acceleration for STAPL
+            <span>Parasol Laboratory, UIUC</span>
+          </div>
+        </a>
+          <div>
+            <h3>GPU Interoperability for Standard Template Adaptive Parallel Library (STAPL) — Parasol Lab, UIUC</h3>
+            <p class="subtitle">
+              This project explores how GPUs can be integrated into the Standard Template Adaptive Parallel Library (STAPL) to speed up for_each, an algorithm in C++ STL. 
+              By using CUDA and benchmarking on an 8-GPU NVIDIA H100 system, we found that using pinned and zero-copy memory dramatically reduces memory copy overhead and delivers 10-100x speedups over CPU execution for complex workloads. 
+              Overall, we observed that GPU acceleration can effectively improve runtime of common STL algorithms. I am currently working on accelerating other STL-equivalent STAPL algorithms such as reverse.
+            </p>
+          </div>
+          <div class="tags">
+            <span class="tag">CUDA</span><span class="tag">C++</span><span class="tag">MPI</span><span class="tag">Linux</span>
+          </div>
+          <div class="list">
+            <div class="row">
+              <span>Poster</span>
+              <small><a href="files/STAPL_POSTER_COPY.pdf" target="_blank" rel="noopener">View PDF</a></small>
+            </div>
+            <div class="row">
+              <span>GitLab</span>
+              <small><a href="https://gitlab.com/parasol-lab/stapl/-/tree/master/stapl?ref_type=heads" target="_blank" rel="noopener">gitlab.com/parasol-lab/stapl</a></small>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Featured Projects</h2>
+      <div class="filterbar" role="toolbar" aria-label="Project filters">
+      </div>
+      <div class="grid" id="projectGrid" aria-live="polite">
+        <article class="col-6 card pad project" data-tags="cuda hpc">
+          <div class="thumb carousel">
+            <button class="carousel-btn prev" aria-label="Previous">‹</button>
+          <div class="carousel-track">
+            <video src="files/fpga_demo.mp4" muted autoplay loop playsinline></video>
+          </div>       
+            <button class="carousel-btn next" aria-label="Next">›</button>
+          </div>
+          <div>
+            <h3>Camera Vision Pipeline on FPGA</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">SystemVerilog</span><span class="tag">I2C</span><span class="tag">Vivado</span>
+          </div>
+          <div class="list">
+            <ul>
+              <li>Stable grayscale 640 x 480 VGA YUV422 camera output @ 60Hz</li>
+              <li>Real-time edge detection using filters and UV thresholds</li>
+              <li>XADC-based brightness dial with 128 discrete levels </li>
+            </ul>
+            <div class="row">
+            <span>Repo</span>
+            <small>
+              <a href="https://github.com/swarupm3/FPGA-Camera-Project"
+                target="_blank"
+                rel="noopener">
+                github.com/swarupm3/FPGA-Camera-Project
+              </a>
+          </small>
+        </div>
+
+          </div>
+        </article>
+
+        <article class="col-6 card pad project" data-tags="fpga">
+          <a class="thumb" href="#">
+            <img src="files/thermometer_2.png" alt="FPGA board" loading="lazy" />
+          </a>
+          <div>
+            <h3>Interactive Thermometer</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Circuit Design</span><span class="tag">Oscilloscope</span><span class="tag">Temperature Sesnors</span>
+          </div>
+          <div class="list">
+            <ul>
+              <li>User adjustable hot and cold thresholds via potentiometer dials</li>
+              <li>Circuit tracks temperature based on touch using TMP36 sensor</li>
+              <li>Alerts user with LEDs to indicate if the temperature is too hot or cold</li>
+            </ul>
+          </div>
+          <div class="row">
+            <span>Report</span>
+            <small>
+              <a href= files/Thermometer_Report.pdf
+                target="_blank"
+                rel="noopener">
+                Interactive Thermometer Report
+              </a>
+          </small>
+        </div>
+        </article>
+
+        <article class="col-6 card pad project" data-tags="embedded">
+          <a class="thumb" href="#">
+            <img src="files/4096robot.jpg" alt="ESP32 dev board" loading="lazy" />
+          </a>
+          <div>
+            <h3>Herme-Z FIRST Robotics Competition Robot</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">CAN</span><span class="tag">Object Detection</span>
+          </div>
+
+          <div class="list">
+            <ul>
+              <li>Neural Network Pipeline for in field Object Detection</li>
+              <li>Fully autonomous, semi autonomous, and teleoperated control modes</li>
+              <li>4-Camera vision system using PhotonVision for April Tag detection</li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <span>Repo</span>
+            <small>
+              <a href="https://github.com/CtrlZ-FRC4096/Robot-2024-Public"
+                target="_blank"
+                rel="noopener">
+                github.com/CtrlZ-FRC4096/Robot-2024-Public
+              </a>
+          </small>
+        </div>
+        </article>
+
+        <article class="col-6 card pad project" data-tags="web">
+          <div class="thumb carousel">
+          <button class="carousel-btn prev" aria-label="Previous">‹</button>
+          <div class="carousel-track">
+            <img src="files/business_beacon_1.png" alt="FPGA camera output" />
+            <img src="files/business_beacon_2.png" alt="Edge detection output" />
+          </div>
+          <button class="carousel-btn next" aria-label="Next">›</button>
+        </div>
+          <div>
+            <h3>Business Beacon Webapp</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+          </div>
+          <div class="list">
+            <ul>
+              <li>Webapp to store business contact info, addresses, and services</li>
+              <li>Meta Llama API used to autofill data for a given Company</li>
+              <li>Placed Top 10 at FBLA NLC Coding and Programming Event 2024</li>
+            </ul>
+          </div>
+          <div class="row">
+            <span>Repo</span>
+            <small>
+              <a href="https://github.com/swarupm3/Business-Beacon"
+                target="_blank"
+                rel="noopener">
+                github.com/swarupm3/Business-Beacon
+              </a>
+          </small>
+        </div>
+        <div class="row">
+            <span>Website</span>
+            <small>
+              <a href="https://fbla.ajaxcore.com/login/"
+                target="_blank"
+                rel="noopener">
+                Business Beacon
+              </a>
+          </small>
+        </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="grid">
+        <div class="col-12 card pad">
+          <div class="list">
+
+            <div class="row"><strong>UIUC ECE Dept — ECE 220 Course Staff</strong> <small>Aug 2025 – Present</small></div>
+
+            <div class="list">
+              <ul>
+                <li>Mentored 30+ students weekly, providing technical feedback for C, C++ and Assembly projects</li>
+                <li>Proctored exams and maintained accurate grading standards</li>
+              </ul>
+            </div>
+
+
+            <div class="row"><strong>Parasol Lab, UIUC — Undergraduate Research Assistant</strong> <small>May 2025 – Present</small></div>
+
+            <div class="list">
+              <ul>
+                <li>Benchmarked C++ STAPL and STL algorithm runtimes across 64 samples (99% Confidence Interval)</li>
+                <li>Enabled multi-GPU STAPL execution using C++ and CUDA, achieving 100x speedup over CPU base</li>
+                <li>Streamlined compilation, linking and execution for 25+ MPI configurations via Bash and Linux tools</li>
+                <li>Automated data visualization using Python to graph runtime metrics, accelerating algorithm analysis</li>
+              </ul>
+            </div>
+
+
+            <div class="row"><strong>Worldwide Youth Science and Engineering Camp Counselor</strong> <small>May 2025 – Aug 2025</small></div>
+
+            <div class="list">
+              <ul>
+                <li>Planned and arranged social activities for 300+ Grade 7-12 students weekly, fostering teamwork and engagement</li>
+                <li>Coordinated safe transportation for campers and counselors to airports, train stations, and activity locations</li>
+              </ul>
+            </div>
+
+            
+            <div class="row"><strong>FIRST Robotics Team 4096 — Software Mentor and Lead</strong> <small>Dec 2022 – Aug 2024</small></div>
+
+            <div class="list">
+              <ul>
+                <li>Used CAN bus to control 30+ motors across 8 subsystems, enabling reliable low-latency communication</li>
+                <li>Deployed computer vision AI object detection to provide operator feedback, reducing cycle times by 30%</li>
+                <li>Managed Git workflows to ensure effective parallel development among 7 software team members</li>
+                <li>1st Place 2023 FIRST Robotics Competition World Championship</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <h2>Resume</h2>
+      <div class="resume">
+        <div class="card pad">
+          <p class="subtitle">Prefer a PDF? Grab it here:</p>
+          <a class="btn" href="files/Swarup Majumder Resume.pdf" download>Download Resume PDF</a>
+          <p style="margin-top:1rem">Or view locally <a href="files/Swarup Majumder Resume.pdf" target="_blank" rel="noopener">in your browser</a>.</p>
+        </div>
+        <div class="card pad">
+          <p class="subtitle">Skills</p>
+          <ul>
+            <li>Languages: C, C++, SystemVerilog, Verilog, Python, CUDA, Bash, Java</li>
+            <li>Tools: Git, Linux, GDB, Vivado, MPI, NVIDIA NSight, Docker</li>
+            <li>Protocols: I2C, SPI, UART, CAN, AXI4-Lite</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="grid">
+        <form class="col-12 card pad" action="mailto:swarupm2@illinois.edu" method="post" enctype="text/plain" onsubmit="notifySent()">
+          <label class="sr-only" for="name">Name</label>
+          <input id="name" name="name" placeholder="Your name" class="row" style="border:none" />
+
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" placeholder="Your email" class="row" style="border:none" />
+
+          <label class="sr-only" for="message">Message</label>
+          <input id="message" name="message" placeholder="Your message" class="row" style="border:none" />
+
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p class="subtitle">© <span id="year"></span> Swarup Majumder <span class="dot-sep">•</span> Built with plain HTML/CSS.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function notifySent(){ alert('Thanks! Your email client will open to send this message.'); }
+  </script>
+  
+  <script>
+    document.querySelectorAll('.carousel').forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    const slides = track.children;
+    let index = 0;
+
+    const nextBtn = carousel.querySelector('.next');
+    const prevBtn = carousel.querySelector('.prev');
+
+    if (slides.length <= 1) {
+      nextBtn.style.display = 'none';
+      prevBtn.style.display = 'none';
+      return;
+    }
+
+    function update() {
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === slides.length - 1;
+
+      prevBtn.style.opacity = prevBtn.disabled ? 0.3 : 0.8;
+      nextBtn.style.opacity = nextBtn.disabled ? 0.3 : 0.8;
+    }
+
+    nextBtn.onclick = () => {
+      if (index < slides.length - 1) {
+        index++;
+        update();
+      }
+    };
+
+    prevBtn.onclick = () => {
+      if (index > 0) {
+        index--;
+        update();
+      }
+    };
+
+    update(); 
+});
+  </script>
+
+</body>
+</html>
+
